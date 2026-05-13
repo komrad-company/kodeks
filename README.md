@@ -1,0 +1,2 @@
+# kodeks
+Komrad DB models
