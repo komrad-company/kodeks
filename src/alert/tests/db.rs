@@ -1,6 +1,5 @@
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
-use kompiler::RuleLevel;
 use serde_json::json;
 
 use crate::alert::Alert;
@@ -11,7 +10,7 @@ fn timestamp_computed_correctly_from_system_time() {
     let alert = Alert::new_at(
         "rule-001".to_string(),
         "Test alert".to_string(),
-        &RuleLevel::High,
+        "high".to_string(),
         json!({}),
         time,
     );
@@ -19,15 +18,15 @@ fn timestamp_computed_correctly_from_system_time() {
 }
 
 #[test]
-fn level_stored_as_rule_level_variant() {
+fn level_stored_as_string() {
     let alert = Alert::new_at(
         "rule-001".to_string(),
         "Test alert".to_string(),
-        &RuleLevel::Critical,
+        "critical".to_string(),
         json!({}),
         SystemTime::now(),
     );
-    assert_eq!(alert.level, RuleLevel::Critical);
+    assert_eq!(alert.level, "critical");
 }
 
 #[test]
@@ -36,7 +35,7 @@ fn pre_epoch_time_sets_timestamp_to_zero() {
     let alert = Alert::new_at(
         "rule-001".to_string(),
         "Test alert".to_string(),
-        &RuleLevel::Low,
+        "low".to_string(),
         json!({}),
         before_epoch,
     );
